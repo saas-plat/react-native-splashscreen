@@ -7,6 +7,7 @@
 //
 
 #import "RCTSplashScreen.h"
+#import "URLImageView.h"
 
 static RCTRootView *rootView = nil;
 
@@ -22,11 +23,11 @@ RCT_EXPORT_MODULE(SplashScreen)
     rootView = v;
     rootView.loadingViewFadeDelay = 0.1;
     rootView.loadingViewFadeDuration = 0.1;
-    UIImageView *view = [[UIImageView alloc]initWithFrame:[UIScreen mainScreen].bounds];
-    view.image = [UIImage imageNamed:@"splash"];
-    
+    URLImageView *view = [[URLImageView alloc]initWithFrame:[UIScreen mainScreen].bounds];
+    [view loadURL: [NSURL URLWithString:@"http://test.saas-plat.com/splash/get"] placeholderImage:[UIImage imageNamed:@"splash"]];
+
     [[NSNotificationCenter defaultCenter] removeObserver:rootView  name:RCTContentDidAppearNotification object:rootView];
-    
+
     [rootView setLoadingView:view];
 }
 
