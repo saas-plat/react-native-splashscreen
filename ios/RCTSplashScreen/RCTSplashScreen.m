@@ -24,7 +24,7 @@ RCT_EXPORT_MODULE(SplashScreen)
     rootView.loadingViewFadeDelay = 0.1;
     rootView.loadingViewFadeDuration = 0.1;
     URLImageView *view = [[URLImageView alloc]initWithFrame:[UIScreen mainScreen].bounds];
-    [view loadURL: [NSURL URLWithString:@"http://test.saas-plat.com/splash/get"] placeholderImage:[UIImage imageNamed:@"splash"]];
+    [view loadURL: [NSURL URLWithString:@"http://api.saas-plat.com/splash/get"] placeholderImage:[UIImage imageNamed:@"splash"]];
 
     [[NSNotificationCenter defaultCenter] removeObserver:rootView  name:RCTContentDidAppearNotification object:rootView];
 

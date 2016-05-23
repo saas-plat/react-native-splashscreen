@@ -12,7 +12,7 @@
     self = [super init];
 
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-        diskCachePath = [[[paths objectAtIndex:0] stringByAppendingPathComponent:@"ImageCache"] retain];
+        diskCachePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"ImageCache"];
 
         if (![[NSFileManager defaultManager] fileExistsAtPath:diskCachePath]) {
                 NSError *error = nil;
@@ -32,7 +32,7 @@
         return nil;
     }
 
-    UIImage *image = [[[UIImage alloc] initWithContentsOfFile:localPath] autorelease];
+    UIImage *image = [[UIImage alloc] initWithContentsOfFile:localPath];
     //return (nil == image) ? nil : image;
 
     if (nil != image) {

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		3245CDF11BFEE35C00EABF68 /* RCTSplashScreen.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3245CDF01BFEE35C00EABF68 /* RCTSplashScreen.h */; };
 		3245CDF31BFEE35C00EABF68 /* RCTSplashScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 3245CDF21BFEE35C00EABF68 /* RCTSplashScreen.m */; };
+		9C6970A41CF33A7C004C06F6 /* URLImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C6970A31CF33A7C004C06F6 /* URLImageView.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -28,6 +29,8 @@
 		3245CDED1BFEE35C00EABF68 /* libRCTSplashScreen.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRCTSplashScreen.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		3245CDF01BFEE35C00EABF68 /* RCTSplashScreen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCTSplashScreen.h; sourceTree = "<group>"; };
 		3245CDF21BFEE35C00EABF68 /* RCTSplashScreen.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RCTSplashScreen.m; sourceTree = "<group>"; };
+		9C6970A21CF33A7C004C06F6 /* URLImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = URLImageView.h; sourceTree = "<group>"; };
+		9C6970A31CF33A7C004C06F6 /* URLImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = URLImageView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +63,8 @@
 		3245CDEF1BFEE35C00EABF68 /* RCTSplashScreen */ = {
 			isa = PBXGroup;
 			children = (
+				9C6970A21CF33A7C004C06F6 /* URLImageView.h */,
+				9C6970A31CF33A7C004C06F6 /* URLImageView.m */,
 				3245CDF01BFEE35C00EABF68 /* RCTSplashScreen.h */,
 				3245CDF21BFEE35C00EABF68 /* RCTSplashScreen.m */,
 			);
@@ -122,6 +127,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9C6970A41CF33A7C004C06F6 /* URLImageView.m in Sources */,
 				3245CDF31BFEE35C00EABF68 /* RCTSplashScreen.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
