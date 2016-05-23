@@ -123,13 +123,19 @@
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
+    UIImage *img = [[UIImage alloc] initWithData:responseData];
+    [self cacheImageToDisk:@"splash" image:img];
+
+    //
     UIActivityIndicatorView *activity = (UIActivityIndicatorView*)[self viewWithTag:11];
     if (activity) {
       [activity stopAnimating];
       activity.hidden = YES;
     }
+
+    // show
     self.alpha = 0.0;
-    self.image = [[UIImage alloc] initWithData:responseData] ;
+    self.image = img;
     [ UIView animateWithDuration:0.5 animations:^{
         self.alpha = 1.0;
     }];
