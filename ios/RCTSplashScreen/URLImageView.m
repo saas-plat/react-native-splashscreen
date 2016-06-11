@@ -7,9 +7,9 @@
 
 @implementation URLImageView
 
-- (id)init
+- (id)initWithFrame:(CGRect)frame
 {
-    self = [super init];
+    self = [super initWithFrame:frame];
 
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
         diskCachePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"ImageCache"];
@@ -54,9 +54,9 @@
 - (void)loadURL:(NSURL*)url placeholderImage:(UIImage *)image
 {
     UIImage *file = [self getImageFromDiskByKey:@"splash"];
-    if (image){
+    if (nil != image){
        self.image = image;
-    }else if (file){
+    }else if (nil != file){
        self.image = file;
     }else{
       UIActivityIndicatorView *activity = (UIActivityIndicatorView*)[self viewWithTag:11];
@@ -69,7 +69,7 @@
       [activity startAnimating];
     }
 
-    if (url){
+    if (nil != url){
       responseData = [[NSMutableData alloc] init];
       NSURLRequest *request = [NSURLRequest requestWithURL:url];
       [NSURLConnection connectionWithRequest:request delegate:self];
