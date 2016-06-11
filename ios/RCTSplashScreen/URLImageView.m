@@ -53,12 +53,13 @@
 
 - (void)loadURL:(NSURL*)url placeholderImage:(UIImage *)image
 {
-    UIImage *file = [self getImageFromDiskByKey:@"splash"];
-    if (nil != image){
+    UIImage *cachefile = [self getImageFromDiskByKey:@"splash"];
+    // 先从cache中加载
+    if (nil != cachefile){
+       self.image = cachefile;
+    }else if (nil != image){
        self.image = image;
-    }else if (nil != file){
-       self.image = file;
-    }else{
+    }else {
       UIActivityIndicatorView *activity = (UIActivityIndicatorView*)[self viewWithTag:11];
       if (!activity) {
           activity = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];

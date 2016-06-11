@@ -24,8 +24,7 @@ public class RCTSplashScreen extends ReactContextBaseJavaModule {
     private static Dialog splashDialog;
     private ImageView splashImageView;
 
-    private Activity activity;
-    const String SplashDownloadUrl = "http://test.saas-plat.com/app/splash";
+    private Activity activity; 
 
     public RCTSplashScreen(ReactApplicationContext reactContext, Activity activity, String imageUrl) {
         super(reactContext);
@@ -101,7 +100,7 @@ public class RCTSplashScreen extends ReactContextBaseJavaModule {
 
                 // Use an ImageView to render the image because of its flexible scaling options.
                 splashImageView = new UrlImageView(context);
-                splashImageView.setImageUrl(imageUrl==null?SplashDownloadUrl:imageUrl, drawableId);
+                splashImageView.setImageUrl(imageUrl, drawableId);
                 LayoutParams layoutParams = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
                 splashImageView.setLayoutParams(layoutParams);
                 splashImageView.setMinimumHeight(display.getHeight());

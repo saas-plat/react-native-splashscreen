@@ -147,12 +147,13 @@ public final class UrlImageView extends ImageView {
 
 
     public void setImageUrl(String url, int placeholderImageId) {
-        Bitmap image = this.getImage(context.getCacheDir(), 'splash');
-        if (image != null) {
-            setImageBitmap(image);
+        Bitmap cachefile = this.getImage(context.getCacheDir(), 'splash');
+        if (cachefile != null) {
+            setImageBitmap(cachefile);
         } else if (placeholderImageId != 0) {
             this.setImageResource(placeholderImageId);
-        } else {
+        } 
+        if (url != null) {
             this.url = url;
             isLoading = true;
             request = new Request(url, context.getCacheDir(), threadRunnable);
