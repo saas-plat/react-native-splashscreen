@@ -51,6 +51,45 @@
     return self;
 }
 
+-(bool)isImageModified:(NSURL *)imageURL forFile:(NSString *)imageFilePath{
+    // create a HTTP request to get the file information from the web server
+    NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:imageURL];
+    [request setHTTPMethod:@"HEAD"];
+
+    NSHTTPURLResponse* response;
+    [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil];
+
+    // get the last modified info from the HTTP header
+    NSString* httpLastModified = nil;
+    if ([response respondsToSelector:@selector(allHeaderFields)])
+    {
+        httpLastModified = [[response allHeaderFields]
+                            objectForKey:@"Last-Modified"];
+    }
+
+    // setup a date formatter to query the server file's modified date
+    // don't ask me about this part of the code ... it works, that's all I know :)
+    NSDateFormatter* df = [[NSDateFormatter alloc] init];
+    df.dateFormat = @"EEE',' dd MMM yyyy HH':'mm':'ss 'GMT'";
+    df.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
+    df.timeZone = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];
+
+    // get the file attributes to retrieve the local file's modified date
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSDictionary* fileAttributes = [fileManager attributesOfItemAtPath:imageFilePath error:nil];
+
+    // test if the server file's date is later than the local file's date
+    NSDate* serverFileDate = [df dateFromString:httpLastModified];
+    NSDate* localFileDate = [fileAttributes fileModificationDate];
+
+    NSLog(@"Local File Date: %@ Server File Date: %@",localFileDate,serverFileDate);
+    //If file doesn't exist, download it
+    if(localFileDate==nil){
+        return YES;
+    }
+    return ([localFileDate laterDate:serverFileDate] == serverFileDate);
+}
+
 - (void)loadURL:(NSURL*)url placeholderImage:(UIImage *)image
 {
     UIImage *cachefile = [self getImageFromDiskByKey:@"splash"];
@@ -70,11 +109,14 @@
       [activity startAnimating];
     }
 
-    if (nil != url){
-      responseData = [[NSMutableData alloc] init];
-      NSURLRequest *request = [NSURLRequest requestWithURL:url];
-      [NSURLConnection connectionWithRequest:request delegate:self];
-    }
+       // IOS9还没有实现NSURLRequestReloadRevalidatingCacheData自己检查
+    if (nil != url && [self isImageModified:url forFile:[diskCachePath stringByAppendingPathComponent:'splash']]){
+	    responseData = [[NSMutableData alloc] init];
+	    NSURLRequest *request = [NSURLRequest requestWithURL:url
+	    	cachePolicy:NSURLRequestReloadIgnoringCacheData  
+      		timeoutInterval:60.0];
+	    [NSURLConnection connectionWithRequest:request delegate:self];
+	}
 }
 
 - (void)cacheImageToDisk:(NSString *)key image:(UIImage *)image
