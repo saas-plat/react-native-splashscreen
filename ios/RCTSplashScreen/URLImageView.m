@@ -53,11 +53,11 @@
 
 - (void)loadURL:(NSURL*)url placeholderImage:(UIImage *)image
 {
-     UIImage *file = [self getImageFromDiskByKey:@"splash"];
-     if (file){
-       self.image = file;
-     }else if (image){
+    UIImage *file = [self getImageFromDiskByKey:@"splash"];
+    if (image){
        self.image = image;
+    }else if (file){
+       self.image = file;
     }else{
       UIActivityIndicatorView *activity = (UIActivityIndicatorView*)[self viewWithTag:11];
       if (!activity) {
@@ -69,9 +69,11 @@
       [activity startAnimating];
     }
 
-    responseData = [[NSMutableData alloc] init];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    [NSURLConnection connectionWithRequest:request delegate:self];
+    if (url){
+      responseData = [[NSMutableData alloc] init];
+      NSURLRequest *request = [NSURLRequest requestWithURL:url];
+      [NSURLConnection connectionWithRequest:request delegate:self];
+    }
 }
 
 - (void)cacheImageToDisk:(NSString *)key image:(UIImage *)image

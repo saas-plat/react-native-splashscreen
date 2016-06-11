@@ -11,6 +11,6 @@
 
 @interface RCTSplashScreen : NSObject <RCTBridgeModule>
 
-+ (void)show:(RCTRootView *)v;
++ (void)show:(RCTRootView *)v imageUrl:(NSString *)url;
 
 @end
