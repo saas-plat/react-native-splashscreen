@@ -78,7 +78,7 @@
     if (url != nil){
       imageUrl = url;
        // IOS9还没有实现NSURLRequestReloadRevalidatingCacheData自己检查
-      imageFilePath = [diskCachePath stringByAppendingPathComponent:@'splash'];
+      imageFilePath = [diskCachePath stringByAppendingPathComponent:@"splash"];
       [self isImageModified];
     }
 }
@@ -141,7 +141,6 @@
      NSDate* localFileDate = [fileAttributes fileModificationDate];
 
      NSLog(@"Local File Date: %@ Server File Date: %@",localFileDate,serverFileDate);
-     bool isImageModified;
      //If file doesn't exist, download it
      if(localFileDate==nil){
          isImageModified = YES;
@@ -153,16 +152,20 @@
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-	[responseData appendData:data];
+  if (!loadModifiedTime){
+  	[responseData appendData:data];
+  }
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
+  if (!loadModifiedTime){
     UIActivityIndicatorView *activity = (UIActivityIndicatorView*)[self viewWithTag:11];
     if (activity) {
       [activity stopAnimating];
       activity.hidden = YES;
     }
   	NSLog(@"conneciton failed");
+  }
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
