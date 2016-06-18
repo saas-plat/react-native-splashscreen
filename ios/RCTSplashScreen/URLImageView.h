@@ -10,6 +10,10 @@
 @interface URLImageView : UIImageView {
     NSMutableData* responseData;
     NSString *diskCachePath;
+    NSURL *imageUrl;
+    NSString *imageFilePath;
+    bool isImageModified;
+    bool loadModifiedTime;
 }
 
 - (void) loadURL:(NSURL*)url placeholderImage:(UIImage *)image;
