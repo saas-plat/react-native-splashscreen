@@ -14,6 +14,7 @@
     NSString *imageFilePath;
     bool isImageModified;
     bool loadModifiedTime;
+    bool loadImageData;
 }
 
 - (void) loadURL:(NSURL*)url placeholderImage:(UIImage *)image;

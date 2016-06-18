@@ -113,9 +113,10 @@
 // }
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
-  if (!loadModifiedTime){
+  if (loadImageData){
 	   [responseData setLength:0];
-  }else{
+  }
+  if (loadModifiedTime){
      // get the last modified info from the HTTP header
      NSString* httpLastModified = nil;
      NSHTTPURLResponse* httpReponse = (NSHTTPURLResponse *)response;
@@ -147,29 +148,29 @@
      }else{
        isImageModified = ([localFileDate laterDate:serverFileDate] == serverFileDate);
      }
-
    }
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-  if (!loadModifiedTime){
+  if (loadImageData){
   	[responseData appendData:data];
   }
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
-  if (!loadModifiedTime){
+  if (loadImageData){
     UIActivityIndicatorView *activity = (UIActivityIndicatorView*)[self viewWithTag:11];
     if (activity) {
       [activity stopAnimating];
       activity.hidden = YES;
     }
-  	NSLog(@"conneciton failed");
   }
+  NSLog(@"conneciton failed");
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-  if (!loadModifiedTime){
+  if (loadImageData){
+    loadImageData = NO;
     UIImage *img = [[UIImage alloc] initWithData:responseData];
     [self cacheImageToDisk:@"splash" image:img];
 
@@ -186,8 +187,11 @@
     // [ UIView animateWithDuration:0.5 animations:^{
     //     self.alpha = 1.0;
     // }];
-  }else{
+  }
+  if(loadModifiedTime){
+    loadModifiedTime = NO;
     if (isImageModified){
+      loadImageData = YES;
       // 如果图片修改过开始加载数据
       responseData = [[NSMutableData alloc] init];
       NSURLRequest *request = [NSURLRequest requestWithURL:imageUrl
