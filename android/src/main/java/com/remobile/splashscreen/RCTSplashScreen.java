@@ -22,9 +22,9 @@ import com.facebook.react.bridge.ReactMethod;
 
 public class RCTSplashScreen extends ReactContextBaseJavaModule {
     private static Dialog splashDialog;
-    private ImageView splashImageView;
+    private UrlImageView splashImageView;
 
-    private Activity activity; 
+    private Activity activity;
 
     public RCTSplashScreen(ReactApplicationContext reactContext, Activity activity, String imageUrl) {
         super(reactContext);
@@ -87,7 +87,7 @@ public class RCTSplashScreen extends ReactContextBaseJavaModule {
         return drawableId;
     }
 
-    private void showSplashScreen(String imageUrl) {
+    private void showSplashScreen(final String imageUrl) {
         final int drawableId = getSplashId();
         if ((splashDialog != null && splashDialog.isShowing())) {
             return;

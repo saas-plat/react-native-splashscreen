@@ -10,6 +10,11 @@ import android.widget.ImageView;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
+import java.net.URL;
+import java.net.HttpURLConnection;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -36,15 +41,15 @@ public final class UrlImageView extends ImageView {
         }
     };
 
+    public enum Status {
+        WAIT, LOADING, LOADED
+    }
+
     class Request {
         private final String url;
         private final File cacheDir;
         private final Runnable runnable;
         private Status status = Status.WAIT;
-
-        public enum Status {
-            WAIT, LOADING, LOADED
-        }
 
         public Request(String url, File cacheDir) {
             this.url = url;
@@ -92,11 +97,10 @@ public final class UrlImageView extends ImageView {
         }
     }
 
-
     private boolean setImageLocalCache() {
         Bitmap image = getImage(context.getCacheDir(), url);
-        if (image != null && image.get() != null) {
-            setImageBitmap(image.get());
+        if (image != null) {
+            setImageBitmap(image);
             isLoading = false;
             return (true);
         }
@@ -136,7 +140,7 @@ public final class UrlImageView extends ImageView {
         File localFile = new File(cacheDir, fileName);
         Bitmap bitmap = null;
         try {
-            bitmap = new BitmapFactory.decodeFile(localFile.getPath());
+            bitmap = BitmapFactory.decodeFile(localFile.getPath());
         } catch (Exception e) {
             e.printStackTrace();
         } catch (OutOfMemoryError e) {
@@ -147,12 +151,12 @@ public final class UrlImageView extends ImageView {
 
 
     public void setImageUrl(String url, int placeholderImageId) {
-        Bitmap cachefile = this.getImage(context.getCacheDir(), 'splash');
+        Bitmap cachefile = this.getImage(context.getCacheDir(), "splash");
         if (cachefile != null) {
             setImageBitmap(cachefile);
         } else if (placeholderImageId != 0) {
             this.setImageResource(placeholderImageId);
-        } 
+        }
         if (url != null) {
             this.url = url;
             isLoading = true;
@@ -170,14 +174,14 @@ public final class UrlImageView extends ImageView {
 
 
     private void doRequest(Request request) {
-        request.setStatus(Request.Status.LOADING);
+        request.setStatus(Status.LOADING);
         try {
-            image = getBitmapFromURL(request.getUrl());
-            saveBitmap(request.getCacheDir(), 'splash', image.get());
+            Bitmap image = getBitmapFromURL(request.getUrl());
+            saveBitmap(request.getCacheDir(), "splash", image);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        request.setStatus(Request.Status.LOADED);
+        request.setStatus(Status.LOADED);
         request.getRunnable().run();
     }
 
