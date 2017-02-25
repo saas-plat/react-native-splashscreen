@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import android.app.Activity;
 import android.content.Intent;
 
 import com.facebook.react.ReactPackage;
@@ -16,20 +15,18 @@ import com.facebook.react.uimanager.ViewManager;
 
 public class RCTSplashScreenPackage implements ReactPackage {
 
-    private Activity activity;
     private RCTSplashScreen mModuleInstance;
     private String imageUrl;
 
-    public RCTSplashScreenPackage(Activity activity, String imageUrl) {
+    public RCTSplashScreenPackage(String imageUrl) {
         super();
-        this.activity = activity;
         this.imageUrl = imageUrl;
     }
 
 
     @Override
     public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
-        mModuleInstance = new RCTSplashScreen(reactContext, this.activity, this.imageUrl);
+        mModuleInstance = new RCTSplashScreen(reactContext, this.imageUrl);
         return Arrays.<NativeModule>asList(
                 mModuleInstance
         );
